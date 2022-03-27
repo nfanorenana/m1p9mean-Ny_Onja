@@ -10,7 +10,7 @@ const config = require('./config/database');
 const app = express();
 const port = process.env.PORT || 3333;
 
-const users = require('./routes/userRoute');
+const users = require('./routes/user.route');
 
 
 // Connecting with mongo db
