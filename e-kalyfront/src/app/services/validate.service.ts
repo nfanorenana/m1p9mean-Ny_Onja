@@ -7,7 +7,6 @@ export class ValidateService {
   constructor() {}
 
   validateRegister(user) {
-    console.log(user);
     if (
       user.name === undefined ||
       user.username === undefined ||
