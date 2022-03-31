@@ -3,7 +3,7 @@
     <a class="navbar-brand" routerLink="">EKaly</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!authService.loggedIn()">
           <a
             class="nav-link"
             routerLinkActive="active"
@@ -12,7 +12,7 @@
             >Login</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!authService.loggedIn()">
           <a
             class="nav-link"
             routerLinkActive="active"
@@ -21,7 +21,25 @@
             >Signup</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="authService.loggedIn()">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLink="/dashboard"
+            >Dashboard</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="authService.loggedIn()">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLink="/order"
+            >Order</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="authService.loggedIn()">
           <a class="nav-link" (click)="onLogoutClick()">Logout</a>
         </li>
       </ul>

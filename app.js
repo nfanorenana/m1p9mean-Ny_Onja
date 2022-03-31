@@ -48,6 +48,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/user', users);
 
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public/index.html'));
+// });
 
 // Setting up the routes
 app.get('/', (req, res) => {

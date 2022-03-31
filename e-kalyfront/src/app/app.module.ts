@@ -12,15 +12,22 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { OrderComponent } from './components/order/order.component';
 
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'order', component: OrderComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
@@ -31,6 +38,7 @@ const routes: Routes = [
     RegisterComponent,
     HomeComponent,
     DashboardComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +49,7 @@ const routes: Routes = [
     // FlashMessagesModule.forRoot(),
   ],
   exports: [RouterModule],
-  providers: [ValidateService, AuthService],
+  providers: [ValidateService, AuthService, AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
