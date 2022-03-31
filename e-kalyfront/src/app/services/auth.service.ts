@@ -12,20 +12,26 @@ export class AuthService {
 
   registerUser(user) {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post<any>('http://localhost:3333/user/register', user, {
+    // return this.http.post<any>('http://localhost:8080/user/register', user, {
+    //   headers: headers,
+    // });
+    return this.http.post<any>('user/register', user, {
       headers: headers,
     });
   }
 
   authenticateUser(user) {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post<any>(
-      'http://localhost:3333/user/authenticate',
-      user,
-      {
-        headers: headers,
-      }
-    );
+    // return this.http.post<any>(
+    //   'http://localhost:8080/user/authenticate',
+    //   user,
+    //   {
+    //     headers: headers,
+    //   }
+    // );
+    return this.http.post<any>('user/authenticate', user, {
+      headers: headers,
+    });
   }
 
   getOrder() {
@@ -33,7 +39,10 @@ export class AuthService {
       .set('Content-Type', 'application/json')
       .set('Authorization', this.authToken);
     this.loadToken();
-    return this.http.get<any>('http://localhost:3333/user/order', {
+    // return this.http.get<any>('http://localhost:8080/user/order', {
+    //   headers: headers,
+    // });
+    return this.http.get<any>('user/order', {
       headers: headers,
     });
   }

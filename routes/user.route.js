@@ -60,7 +60,6 @@ router.post('/authenticate', (req, res, next) => {
 });
 
 router.get('/order', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-    console.log(req);
     res.json({ user: req.user });
 });
 
