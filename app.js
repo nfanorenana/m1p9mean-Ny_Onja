@@ -5,12 +5,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const config = require('./config/database');
+const config = require('./config/database.config');
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 8080;
 
-const users = require('./routes/user.route');
+const users = require('./routes/user.routes');
+const meal = require('./routes/meal.routes');
 
 
 // Connecting with mongo db
@@ -18,7 +20,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(config.database, {
     useNewUrlParser: true, useUnifiedTopology: true
 }).then(() => {
-    console.log('Database sucessfully connected')
+    console.log('Database successfully connected')
 }, error => {
     console.log('Database could nto connected: ' + error)
 })
@@ -27,7 +29,7 @@ mongoose.connect(config.database, {
 // Setting up middleware
 // Body Parser Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extendd: false }));
+app.use(bodyParser.urlencoded({ extend: false }));
 
 // CORS Middleware
 app.use(cors());
@@ -41,12 +43,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./config/passport')(passport);
+require('./config/passport.config')(passport);
 
 // Static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/user', users);
+app.use('/meal', meal);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));

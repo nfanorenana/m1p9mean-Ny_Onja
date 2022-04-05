@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,26 +13,22 @@ export class AuthService {
 
   registerUser(user) {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    // return this.http.post<any>('http://localhost:8080/user/register', user, {
-    //   headers: headers,
-    // });
-    return this.http.post<any>('user/register', user, {
+    return this.http.post<any>(environment.apiUrl + 'user/register', user, {
       headers: headers,
     });
+    // return this.http.post<any>('user/register', user, {
+    //   headers: headers,
+    // });
   }
 
   authenticateUser(user) {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    // return this.http.post<any>(
-    //   'http://localhost:8080/user/authenticate',
-    //   user,
-    //   {
-    //     headers: headers,
-    //   }
-    // );
-    return this.http.post<any>('user/authenticate', user, {
+    return this.http.post<any>(environment.apiUrl + 'user/authenticate', user, {
       headers: headers,
     });
+    // return this.http.post<any>('user/authenticate', user, {
+    //   headers: headers,
+    // });
   }
 
   getOrder() {
@@ -39,10 +36,18 @@ export class AuthService {
       .set('Content-Type', 'application/json')
       .set('Authorization', this.authToken);
     this.loadToken();
-    // return this.http.get<any>('http://localhost:8080/user/order', {
+    return this.http.get<any>(environment.apiUrl + 'user/order', {
+      headers: headers,
+    });
+    // return this.http.get<any>('user/order', {
     //   headers: headers,
     // });
-    return this.http.get<any>('user/order', {
+  }
+
+  verifyUser(code) {
+    console.log(code);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get<any>(environment.apiUrl + 'user/confirm/' + code, {
       headers: headers,
     });
   }

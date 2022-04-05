@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ValidateService } from 'src/app/services/validate.service';
 import { AuthService } from 'src/app/services/auth.service';
-// import { FlashMessagesService } from 'flash-messages-angular';
+import { FlashMessagesService } from 'flash-messages-angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +18,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private validateService: ValidateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private flashMessages: FlashMessagesService
   ) {}
 
   ngOnInit(): void {}
@@ -32,33 +33,33 @@ export class RegisterComponent implements OnInit {
     };
 
     if (!this.validateService.validateRegister(user)) {
-      // this.flashMessagesService.show('Please fill in all fields', {
-      //   cssClass: 'alert-danger',
-      //   timeout: 3000,
-      // });
+      this.flashMessages.show('Please fill in all fields', {
+        cssClass: 'alert-danger',
+        timeout: 3000,
+      });
       return false;
     }
 
     if (!this.validateService.validateEmail(user.email)) {
-      // this.flashMessagesService.show('Please use a valid email', {
-      //   cssClass: 'alert-danger',
-      //   timeout: 3000,
-      // });
+      this.flashMessages.show('Please use a valid email', {
+        cssClass: 'alert-danger',
+        timeout: 3000,
+      });
       return false;
     }
 
     this.authService.registerUser(user).subscribe((data) => {
       if (data.success) {
-        // this.flashMessagesService.show('You are now registered and can log in', {
-        //   cssClass: 'alert-success',
-        //   timeout: 3000,
-        // });
+        this.flashMessages.show('You are now registered and can log in', {
+          cssClass: 'alert-success',
+          timeout: 3000,
+        });
         this.router.navigate(['/login']);
       } else {
-        // this.flashMessagesService.show('Something went wrong', {
-        //   cssClass: 'alert-danger',
-        //   timeout: 3000,
-        // });
+        this.flashMessages.show(data.msg, {
+          cssClass: 'alert-danger',
+          timeout: 3000,
+        });
         this.router.navigate(['/register']);
       }
     });

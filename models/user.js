@@ -18,10 +18,21 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    role: {
+    status: {
         type: String,
-        required: true
+        enum: ['Pending', 'Active'],
+        default: 'Pending'
+    },
+    confirmationCode: {
+        type: String,
+        unique: true
+    },
+    role:
+    {
+        type: String,
+        enum: ["user", "admin", "delivery_man", "restaurant"]
     }
+
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
@@ -35,6 +46,10 @@ module.exports.getUserByUsername = function (username, callback) {
     User.findOne(query, callback);
 }
 
+module.exports.getAllUser = function (callback) {
+    User.find(callback);
+}
+
 module.exports.addUser = function (newUser, callback) {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -45,9 +60,18 @@ module.exports.addUser = function (newUser, callback) {
     });
 }
 
+module.exports.updateUserStatus = function (user, callback) {
+    user.status = "Active";
+    user.save(callback);
+}
+
 module.exports.comparePassword = function (candidatePassword, hash, callback) {
     bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
         if (err) throw err;
         callback(null, isMatch);
     });
+}
+
+module.exports.verifyUser = function (confirmationCode, callback) {
+    User.findOne({ confirmationCode: confirmationCode, }, callback);
 }
