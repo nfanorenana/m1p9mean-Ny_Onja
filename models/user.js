@@ -3,9 +3,8 @@ const bcrypt = require('bcryptjs');
 
 // User Schema
 const UserSchema = mongoose.Schema({
-    name: {
-        type: String
-    },
+    id: mongoose.Schema.Types.ObjectId,
+    name: String,
     email: {
         type: String,
         required: true
@@ -74,4 +73,14 @@ module.exports.comparePassword = function (candidatePassword, hash, callback) {
 
 module.exports.verifyUser = function (confirmationCode, callback) {
     User.findOne({ confirmationCode: confirmationCode, }, callback);
+}
+
+module.exports.getAllDeliveryAccount = function (callback) {
+    const query = { role: 'delivery_man' };
+    User.find(query, callback);
+}
+
+module.exports.getAllRestaurantAccount = function (callback) {
+    const query = { role: 'restaurant' };
+    User.find(query, callback);
 }
