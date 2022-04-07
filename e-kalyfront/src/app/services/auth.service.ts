@@ -32,10 +32,10 @@ export class AuthService {
   }
 
   getOrder() {
+    this.authToken = this.loadToken();
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', this.authToken);
-    this.loadToken();
     return this.http.get<any>(environment.apiUrl + 'user/order', {
       headers: headers,
     });
@@ -61,12 +61,44 @@ export class AuthService {
 
   loadToken() {
     const token = localStorage.getItem('id_token');
-    this.authToken = token;
+    return token;
   }
 
   loggedIn() {
     const user = JSON.parse(localStorage.getItem('user')!);
     if (user === null) {
+      return false;
+    }
+    return true;
+  }
+
+  isAdmin() {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    if (user.role !== 'admin') {
+      return false;
+    }
+    return true;
+  }
+
+  isRestaurant() {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    if (user.role !== 'restaurant') {
+      return false;
+    }
+    return true;
+  }
+
+  isDeliveryMan() {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    if (user.role !== 'delivery_man') {
+      return false;
+    }
+    return true;
+  }
+
+  isUser() {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    if (user.role !== 'user') {
       return false;
     }
     return true;

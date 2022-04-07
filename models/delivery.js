@@ -6,10 +6,10 @@ const DeliverySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    order: {
+    order: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Order"
-    },
+    }],
     status: {
         type: String,
         enum: ['Pending', 'Finished'],

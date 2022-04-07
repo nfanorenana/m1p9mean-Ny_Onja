@@ -16,6 +16,16 @@ router.get('/get-order', passport.authenticate('jwt', { session: false }), (req,
     })
 });
 
+router.get('/get-restaurant-order', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    Order.getOrderByRestaurant(req.body.restaurant, (err, order) => {
+        if (err) {
+            res.send({ success: false, msg: err });
+        } else {
+            res.send({ success: true, order: order });
+        }
+    })
+})
+
 router.post('/add-order', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
     var total_price = 0;
@@ -40,5 +50,21 @@ router.post('/add-order', passport.authenticate('jwt', { session: false }), (req
         }
     })
 });
+
+router.get('/deliver-order', passport.authenticaate('jwt', { session: false }), (req, res, next) => {
+    Order.getOrderById(req.body.order_id, (err, order) => {
+        if (err) {
+            res.send({ success: false, msg: err });
+        } else {
+            Delivery.updateDeliveryStatus(order, (err, delivery) => {
+                if (err) {
+                    res.send({ success: false, msg: err });
+                } else {
+                    res.send({ success: true, msg: 'Order delivered' });
+                }
+            })
+        }
+    })
+})
 
 module.exports = router;

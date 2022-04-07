@@ -126,6 +126,8 @@ router.post('/authenticate', (req, res, next) => {
 router.post('/create-user', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     const token = jwt.sign({ email: req.body.email }, config.secret)
 
+    console.log(req.body);
+
     let newUser = new User({
         name: req.body.name,
         email: req.body.email,
@@ -140,17 +142,22 @@ router.post('/create-user', passport.authenticate('jwt', { session: false }), (r
             res.json({ success: false, msg: 'Failed to add new user' })
         } else {
             res.send({ success: true, msg: 'User registed' });
-            nodemailer.sendNewUserEmail(user.username, user.email, user.password, user.confirmationCode);
+            nodemailer.sendNewUserEmail(user.username, user.email, req.body.password, user.confirmationCode);
         }
     });
 })
 
 router.get('/list-user', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-    User.getAllUser((err, user) => {
+    var allUsers = [];
+
+    User.getAllUser((err, users) => {
         if (err) {
             res.json({ sucess: false, msg: err });
         } else {
-            res.send({ sucess: true, msg: '', user: user });
+            users.forEach((user) => {
+                allUsers.push({ name: user.name, email: user.email, username: user.username, role: user.role, status: user.status })
+            });
+            res.json({ sucess: true, msg: '', user: allUsers });
         }
     })
 })

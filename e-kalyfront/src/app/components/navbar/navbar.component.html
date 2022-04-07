@@ -39,6 +39,30 @@
             >Order</a
           >
         </li>
+        <li
+          class="nav-item"
+          *ngIf="authService.loggedIn() && authService.isAdmin"
+        >
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLink="/admin/listuser"
+            >User</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          *ngIf="authService.loggedIn() && authService.isAdmin"
+        >
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLink="/admin/listuser"
+            >Earnings</a
+          >
+        </li>
         <li class="nav-item" *ngIf="authService.loggedIn()">
           <a class="nav-link" (click)="onLogoutClick()">Logout</a>
         </li>

@@ -14,6 +14,7 @@ const port = process.env.PORT || 8080;
 const users = require('./routes/user.routes');
 const meal = require('./routes/meal.routes');
 const order = require('./routes/order.routes');
+const restaurant = require('./routes/restaurant.routes');
 
 
 // Connecting with mongo db
@@ -52,6 +53,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/user', users);
 app.use('/meal', meal);
 app.use('/order', order);
+app.use('/restaurant', restaurant);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));

@@ -37,3 +37,5 @@ router.post('/add-restaurant', passport.authenticate('jwt', { session: false }),
         })
     })
 })
+
+module.exports = router

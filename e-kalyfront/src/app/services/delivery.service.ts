@@ -6,28 +6,17 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AdminService {
-  user: any;
+export class DeliveryService {
   authToken: any;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  addUser(user) {
+  getOrderToDelivery() {
     this.authToken = this.authService.loadToken();
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', this.authToken);
-    return this.http.post<any>(environment.apiUrl + 'user/create-user', user, {
-      headers: headers,
-    });
-  }
-
-  getUser() {
-    this.authToken = this.authService.loadToken();
-    let headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Authorization', this.authToken);
-    return this.http.get<any>(environment.apiUrl + 'user/list-user', {
+    return this.http.get<any>(environment.apiUrl + 'order/get-order', {
       headers: headers,
     });
   }

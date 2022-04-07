@@ -27,7 +27,7 @@ module.exports.sendConfirmationEmail = (name, email, confirmationCode) => {
     }).catch(err => console.log(err));
 };
 
-module.exports.sendNewUserEmail = (username, email, password) => {
+module.exports.sendNewUserEmail = (username, email, password, confirmationCode) => {
     transport.sendMail({
         from: user,
         to: email,

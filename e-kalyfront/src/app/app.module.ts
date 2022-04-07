@@ -19,6 +19,11 @@ import { AdminComponent } from './components/admin/admin.component';
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { AddUserComponent } from './components/admin/add-user/add-user.component';
+import { ListUserComponent } from './components/admin/list-user/list-user.component';
+
+import { UserFilterPipe } from './components/admin/list-user/user-filter.pipe';
+import { DeliveryComponent } from './components/delivery/delivery.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,6 +37,16 @@ const routes: Routes = [
   },
   { path: 'order', component: OrderComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  {
+    path: 'admin/listuser',
+    component: ListUserComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/adduser',
+    component: AddUserComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
@@ -45,6 +60,10 @@ const routes: Routes = [
     OrderComponent,
     ConfirmationComponent,
     AdminComponent,
+    AddUserComponent,
+    ListUserComponent,
+    UserFilterPipe,
+    DeliveryComponent,
   ],
   imports: [
     BrowserModule,
