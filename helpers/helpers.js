@@ -1,4 +1,3 @@
-const { user } = require("../models");
 
 module.exports.getUserRoute = function (user) {
     switch (user.role) {
