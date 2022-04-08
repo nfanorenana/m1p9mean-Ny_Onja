@@ -21,15 +21,6 @@
             >Signup</a
           >
         </li>
-        <li class="nav-item" *ngIf="authService.loggedIn()">
-          <a
-            class="nav-link"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            routerLink="/dashboard"
-            >Dashboard</a
-          >
-        </li>
         <li
           class="nav-item"
           *ngIf="authService.loggedIn() && authService.isRestaurant()"
