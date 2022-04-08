@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const Meal = require('../models/meal');
+const Restaurant = require('../models/restaurant');
 
 router.post('/add-meal', (req, res, next) => {
-    let newMeal = new Meal({ name: req.body.name, name_lower: req.body.name.toLowerCase(), price: req.body.price, quantity: req.body.quantity });
+    let newMeal = new Meal({ name: req.body.name, name_lower: req.body.name.toLowerCase(), production_cost: req.body.production_cost, selling_price: req.body.selling_price, restaurant: req.body.restaurant });
 
     Meal.findOne({
         name: req.body.name
@@ -27,6 +28,20 @@ router.post('/add-meal', (req, res, next) => {
             })
         }
     })
+})
+
+router.get('/get-restaurant-meal/:restaurant', (req, res, next) => {
+    const restaurant = req.params.restaurant;
+
+    Meal.getMealByRestaurant(restaurant, (err, meal) => {
+        if (!meal) {
+            res.json({ success: false, msg: "Meal not found" });
+        } else {
+            res.json({
+                success: true, meal: meal
+            });
+        }
+    });
 })
 
 router.get('/get-meal/:name', (req, res, next) => {

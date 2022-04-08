@@ -15,4 +15,12 @@ export class HomeService {
       { headers: headers }
     );
   }
+
+  getRestaurantById(id: string) {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get<any>(
+      environment.apiUrl + 'restaurant/get-restaurant/' + id,
+      { headers: headers }
+    );
+  }
 }

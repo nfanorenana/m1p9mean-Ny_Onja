@@ -4,14 +4,10 @@ const RestaurantSchema = mongoose.Schema({
     id: mongoose.Schema.Types.ObjectId,
     name: String,
     location: String,
-    restaurant: {
+    responsible: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    meals: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Meal"
-    }],
 });
 
 const Restaurant = module.exports = mongoose.model('Restaurant', RestaurantSchema);
@@ -30,7 +26,7 @@ module.exports.getRestaurantByName = function (name, callback) {
 }
 
 module.exports.verifyRestaurant = function (name, location, callback) {
-    User.findOne({ name: name, location: location }, callback);
+    Restaurant.findOne({ name: name, location: location }, callback);
 }
 
 module.exports.getRestaurantByLocation = function (location, callback) {
@@ -38,6 +34,16 @@ module.exports.getRestaurantByLocation = function (location, callback) {
     Restaurant.find(query, callback);
 }
 
+module.exports.getRestaurantByResponsible = function (responsible, callback) {
+    const query = { responsible: responsible };
+    Restaurant.find(query, callback);
+}
+
 module.exports.addRestaurant = function (restaurant, callback) {
     restaurant.save(callback);
 }
+
+// module.exports.addMealToRestaurant = function (restaurantId, newMeal, callback) {
+//     Restaurant.findOneAndUpdate({ _id: restaurantId }, { $push: { meals: newMeal._id } })
+
+// }

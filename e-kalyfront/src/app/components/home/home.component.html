@@ -1,1 +1,55 @@
-<p>home works!</p>
+<div class="card">
+  <div class="card-header">
+    <h1>Restaurant</h1>
+    <span
+      *ngIf="getOrder().length !== 0"
+      class="btn btn-sm btn-success"
+      (click)="validateOrder()"
+      >Validate Order</span
+    >
+    <form class="d-flex">
+      <input
+        class="form-control me-2"
+        type="search"
+        id="search-meal"
+        [(ngModel)]="searchMeal"
+        autofocus
+        placeholder="Search"
+      />
+    </form>
+  </div>
+  <ul
+    class="list-group list-group-flush"
+    *ngFor="let restaurant of restaurants | mealFilter: searchMeal"
+  >
+    <li class="list-group-item" (click)="onClickRestaurant(restaurant._id)">
+      {{ restaurant.name }} - {{ restaurant.location }}
+    </li>
+  </ul>
+</div>
+<table class="table" *ngIf="meals">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let meal of meals">
+      <td scope="row">{{ meal.name }}</td>
+      <td>{{ meal.selling_price }}</td>
+      <td
+        (click)="addToOrder(meal)"
+        *ngIf="!getOrder().includes(meal); else content"
+      >
+        <span class="btn btn-primary btn-sm">Order</span>
+      </td>
+      <ng-template #content (click)="removeToOrder(meal)">
+        <td (click)="removeToOrder(meal)">
+          <span class="btn btn-danger btn-sm">Cancel</span>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

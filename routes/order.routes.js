@@ -28,6 +28,8 @@ router.get('/get-restaurant-order', passport.authenticate('jwt', { session: fals
 
 router.post('/add-order', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
+    console.log(req.body);
+
     var total_price = 0;
     var mealOrdered = req.body.meals;
 
@@ -51,7 +53,7 @@ router.post('/add-order', passport.authenticate('jwt', { session: false }), (req
     })
 });
 
-router.get('/deliver-order', passport.authenticaate('jwt', { session: false }), (req, res, next) => {
+router.get('/deliver-order', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     Order.getOrderById(req.body.order_id, (err, order) => {
         if (err) {
             res.send({ success: false, msg: err });

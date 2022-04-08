@@ -6,6 +6,10 @@ const MealSchema = mongoose.Schema({
     name_lower: String,
     production_cost: Number,
     selling_price: Number,
+    restaurant: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Restaurant'
+    },
     published: {
         type: Boolean,
         default: true
@@ -17,6 +21,11 @@ const Meal = module.exports = mongoose.model('Meal', MealSchema);
 
 module.exports.getMealById = function (id, callback) {
     Meal.findById(id, callback);
+}
+
+module.exports.getMealByRestaurant = function (restaurantId, callback) {
+    const query = { restaurant: restaurantId }
+    Meal.find(query, callback);
 }
 
 module.exports.getMealByName = function (name, callback) {

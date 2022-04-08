@@ -2,29 +2,16 @@
 module.exports.getUserRoute = function (user) {
     switch (user.role) {
         case 'user':
-            return 'dashboard'
+            return ''
         case 'admin':
             return 'admin'
         case 'delivery_man':
             return 'delivery'
         case 'restaurant':
-            return 'orderlist'
+            return 'restaurant/orderlist'
         default:
             break;
     }
 };
 
-// module.exports.getEmailSubject = function (user) {
-//     switch (user.role) {
-//         case 'customer':
-//             return 'dashboard'
-//         case 'ekaly':
-//             return 'admin'
-//         case 'delivery_man':
-//             return 'delivery'
-//         case 'restaurant':
-//             return 'orderlist'
-//         default:
-//             break;
-//     }
-// };
+

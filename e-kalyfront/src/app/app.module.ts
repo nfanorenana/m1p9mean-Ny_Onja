@@ -24,9 +24,26 @@ import { ListUserComponent } from './components/admin/list-user/list-user.compon
 
 import { UserFilterPipe } from './components/admin/list-user/user-filter.pipe';
 import { DeliveryComponent } from './components/delivery/delivery.component';
+import { AddRestaurantComponent } from './components/admin/add-restaurant/add-restaurant.component';
+import { ListOrderComponent } from './components/restaurant/list-order/list-order.component';
+import { AddMealComponent } from './components/restaurant/add-meal/add-meal.component';
+import { ListMealComponent } from './components/restaurant/list-meal/list-meal.component';
+import { RestaurantComponent } from './components/home/restaurant/restaurant.component';
+import { MealFilterPipe } from './components/home/meal-filter.pipe';
+import { FooterComponent } from './components/footer/footer.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  {
+    path: 'restaurant',
+    // component: RestaurantComponent,
+    children: [
+      { path: '', component: RestaurantComponent },
+      { path: 'orderlist', component: ListOrderComponent },
+      { path: 'addmeal', component: AddMealComponent },
+      { path: 'listmeal', component: ListMealComponent },
+    ],
+  },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'confirm/:confirmationCode', component: ConfirmationComponent },
@@ -47,6 +64,16 @@ const routes: Routes = [
     component: AddUserComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'admin/addrestaurant',
+    component: AddRestaurantComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'delivery',
+    component: DeliveryComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
@@ -64,6 +91,13 @@ const routes: Routes = [
     ListUserComponent,
     UserFilterPipe,
     DeliveryComponent,
+    AddRestaurantComponent,
+    ListOrderComponent,
+    AddMealComponent,
+    ListMealComponent,
+    RestaurantComponent,
+    MealFilterPipe,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

@@ -75,12 +75,7 @@ module.exports.verifyUser = function (confirmationCode, callback) {
     User.findOne({ confirmationCode: confirmationCode, }, callback);
 }
 
-module.exports.getAllDeliveryAccount = function (callback) {
-    const query = { role: 'delivery_man' };
-    User.find(query, callback);
-}
-
-module.exports.getAllRestaurantAccount = function (callback) {
-    const query = { role: 'restaurant' };
+module.exports.getUserByRole = function (role, callback) {
+    const query = { role: role };
     User.find(query, callback);
 }

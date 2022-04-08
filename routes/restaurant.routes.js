@@ -5,7 +5,7 @@ const passport = require('passport');
 const Restaurant = require('../models/restaurant');
 const User = require('../models/user');
 
-router.get('/get-restaurant', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+router.get('/get-restaurant', (req, res, next) => {
     Restaurant.getAllRestaurant((err, restaurant) => {
         if (err) {
             res.send({ success: false, msg: err });
@@ -15,11 +15,32 @@ router.get('/get-restaurant', passport.authenticate('jwt', { session: false }), 
     })
 })
 
+router.get('/get-restaurant/:id', (req, res, next) => {
+    Restaurant.getRestaurantById(req.params.id, (err, restaurant) => {
+        if (err) {
+            res.send({ success: false, msg: err });
+        } else {
+            res.send({ success: true, restaurant: restaurant });
+        }
+    })
+})
+
+router.get('/get-restaurant-responsible/:id', (req, res, next) => {
+    Restaurant.getRestaurantByResponsible(req.params.id, (err, restaurant) => {
+        if (err) {
+            res.send({ success: false, msg: err });
+        } else {
+            res.send({ success: true, restaurant: restaurant });
+        }
+    })
+})
+
 router.post('/add-restaurant', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+
     let newRestaurant = new Restaurant({
         name: req.body.name,
         location: req.body.location,
-        restaurant: req.body.restaurant._id,
+        responsible: req.body.responsible,
         meals: []
     })
 

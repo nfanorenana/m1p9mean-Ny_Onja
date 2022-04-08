@@ -30,18 +30,33 @@
             >Dashboard</a
           >
         </li>
-        <li class="nav-item" *ngIf="authService.loggedIn()">
+        <li
+          class="nav-item"
+          *ngIf="authService.loggedIn() && authService.isRestaurant()"
+        >
           <a
             class="nav-link"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
-            routerLink="/order"
+            routerLink="/restaurant/orderlist"
             >Order</a
           >
         </li>
         <li
           class="nav-item"
-          *ngIf="authService.loggedIn() && authService.isAdmin"
+          *ngIf="authService.loggedIn() && authService.isRestaurant()"
+        >
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLink="/restaurant/listmeal"
+            >Meal</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          *ngIf="authService.loggedIn() && authService.isAdmin()"
         >
           <a
             class="nav-link"
@@ -53,7 +68,7 @@
         </li>
         <li
           class="nav-item"
-          *ngIf="authService.loggedIn() && authService.isAdmin"
+          *ngIf="authService.loggedIn() && authService.isAdmin()"
         >
           <a
             class="nav-link"
@@ -67,15 +82,6 @@
           <a class="nav-link" (click)="onLogoutClick()">Logout</a>
         </li>
       </ul>
-      <form class="d-flex">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>

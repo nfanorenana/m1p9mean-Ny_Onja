@@ -104,6 +104,10 @@ export class AuthService {
     return true;
   }
 
+  getUserInformation() {
+    return JSON.parse(localStorage.getItem('user')!);
+  }
+
   logout() {
     this.authToken = null;
     this.user = null;

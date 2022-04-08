@@ -19,6 +19,26 @@ export class ValidateService {
     }
   }
 
+  validateNewRestaurant(restaurant) {
+    if (restaurant.name === undefined || restaurant.location === undefined) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  validateMeal(meal) {
+    if (
+      meal.name === undefined ||
+      meal.production_cost === undefined ||
+      meal.selling_price === undefined
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   validateEmail(email: String) {
     return String(email)
       .toLowerCase()

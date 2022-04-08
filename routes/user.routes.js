@@ -18,7 +18,7 @@ router.post('/register', (req, res, next) => {
         username: req.body.username,
         password: req.body.password,
         confirmationCode: token,
-        role: 'user'
+        role: 'admin'
     });
 
     User.findOne({
@@ -126,8 +126,6 @@ router.post('/authenticate', (req, res, next) => {
 router.post('/create-user', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     const token = jwt.sign({ email: req.body.email }, config.secret)
 
-    console.log(req.body);
-
     let newUser = new User({
         name: req.body.name,
         email: req.body.email,
@@ -155,11 +153,26 @@ router.get('/list-user', passport.authenticate('jwt', { session: false }), (req,
             res.json({ sucess: false, msg: err });
         } else {
             users.forEach((user) => {
-                allUsers.push({ name: user.name, email: user.email, username: user.username, role: user.role, status: user.status })
+                allUsers.push({ id: user._id, name: user.name, email: user.email, username: user.username, role: user.role, status: user.status })
             });
             res.json({ sucess: true, msg: '', user: allUsers });
         }
     })
+})
+
+router.get('/list-user/:role', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    var allUsers = [];
+
+    User.getUserByRole(req.params.role, (err, users) => {
+        if (err) {
+            res.json({ sucess: false, msg: err });
+        } else {
+            users.forEach((user) => {
+                allUsers.push({ id: user._id, name: user.name, email: user.email, username: user.username, role: user.role, status: user.status })
+            });
+            res.json({ sucess: true, msg: '', user: allUsers });
+        }
+    });
 })
 
 router.get('/order', passport.authenticate('jwt', { session: false }), (req, res, next) => {

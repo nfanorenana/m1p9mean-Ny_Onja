@@ -1,0 +1,17 @@
+<a routerLink="/restaurant/addmeal">Add meal</a>
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col" *ngIf="authService.isRestaurant()">Production cost</th>
+      <th scope="col">Selling Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let meal of meals">
+      <td scope="row">{{ meal.name }}</td>
+      <td *ngIf="authService.isRestaurant()">{{ meal.production_cost }}</td>
+      <td>{{ meal.selling_price }}</td>
+    </tr>
+  </tbody>
+</table>
